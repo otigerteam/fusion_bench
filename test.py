@@ -4,9 +4,9 @@ import torch.nn as nn
 from torch.utils.cpp_extension import load_inline
 
 # -------------------------------------------------------------
-# Three separate kernels: GEMM, Bias, and ReLU (no fusion)
+# Three separate kernels: GEMM, Bias, and ReLU
 # -------------------------------------------------------------
-original_cuda = r"""
+original_cuda = """
 #include <torch/extension.h>
 #include <hip/hip_runtime.h>
 #include <ATen/hip/HIPContext.h>
@@ -89,11 +89,11 @@ torch::Tensor relu(torch::Tensor C) {
 }
 """
 
-original_cpp = R"(
+original_cpp = """
  torch::Tensor gemm(torch::Tensor, torch::Tensor);
  torch::Tensor add_bias(torch::Tensor, torch::Tensor);
  torch::Tensor relu(torch::Tensor);
-)"
+"""
 
 original_ext = load_inline(
     name="original_kernels",
@@ -101,8 +101,9 @@ original_ext = load_inline(
     cuda_sources=[original_cuda],
     functions=["gemm", "add_bias", "relu"],
     verbose=True,
-    extra_cflags=[f"-I{os.environ['ROCM_HOME']}/include"],
-    extra_ldflags=[f"-L{os.environ['ROCM_HOME']}/lib", "-lamdhip64"],
+    extra_cflags=['-I/opt/rocm/include'],
+    extra_cuda_cflags=['-I/opt/rocm/include'],
+    extra_ldflags=['-L/opt/rocm/lib', "-lamdhip64"],
 )
 
 class OriginalModel(nn.Module):
