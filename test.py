@@ -118,3 +118,16 @@ class Model(nn.Module):
         C = self.add_bias(C, bias)
         C = self.relu(C)
         return C
+
+M, K, N = 64, 64, 64
+
+def get_inputs():
+    # Generate random input matrices A (M×K), B (K×N), and bias vector (N)
+    A    = torch.randn(M, K).cuda()
+    B    = torch.randn(K, N).cuda()
+    bias = torch.randn(N).cuda()
+    return [A, B, bias]
+
+def get_init_inputs():
+    # No extra init args needed for OriginalModel
+    return []
