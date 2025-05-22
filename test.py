@@ -118,8 +118,9 @@ class Model(nn.Module):
         C = self.add_bias(C, bias)
         C = self.relu(C)
         return C
-
-M, K, N = 64, 64, 64
+ 
+# M, K, N = 64, 64, 64
+M, K, N = 1024, 1024, 1024
 
 def get_inputs():
     # Generate random input matrices A (M×K), B (K×N), and bias vector (N)
