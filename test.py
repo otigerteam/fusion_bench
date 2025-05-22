@@ -106,7 +106,7 @@ original_ext = load_inline(
     extra_ldflags=['-L/opt/rocm/lib', "-lamdhip64"],
 )
 
-class OriginalModel(nn.Module):
+class Model(nn.Module):
     def __init__(self):
         super().__init__()
         self.gemm = original_ext.gemm
