@@ -120,7 +120,8 @@ class Model(nn.Module):
         return C
  
 # M, K, N = 64, 64, 64
-M, K, N = 1024, 1024, 1024
+# M, K, N = 1024, 1024, 1024
+M, K, N = 8192, 8192, 8192
 
 def get_inputs():
     # Generate random input matrices A (M×K), B (K×N), and bias vector (N)
